@@ -1,4 +1,4 @@
-"""Extract Tables 1–2 from the supplied 13-page paper snapshot.
+"""Extract Tables 1–2 from the supplied paper snapshot.
 
 Usage: python scripts/extract_results.py /path/to/RoboValue.pdf
 Requires PyMuPDF. This extractor deliberately fails if the table layout changes.
@@ -39,7 +39,9 @@ def read_rows(text):
 
 def extract(pdf):
     doc = pymupdf.open(pdf)
-    assert len(doc) == 13, 'This extractor targets the current 13-page manuscript.'
+    assert len(doc) >= 8, 'Expected Tables 1 and 2 on pages 7 and 8.'
+    assert 'Table 1: Main Results.' in doc[6].get_text(), 'Table 1 moved; inspect the new layout.'
+    assert 'Table 2: Generalization Results.' in doc[7].get_text(), 'Table 2 moved; inspect the new layout.'
     main, ood = read_rows(doc[6].get_text()), read_rows(doc[7].get_text())
     result = []
     for index, (a, b) in enumerate(zip(main, ood)):
@@ -55,6 +57,7 @@ def extract(pdf):
     return {
         'source': 'RoboValue manuscript, Tables 1 and 2',
         'sourceFile': 'RoboValue.pdf',
+        'sourcePageCount': len(doc),
         'sourceSha256': hashlib.sha256(Path(pdf).read_bytes()).hexdigest(),
         'scale': 100,
         'modelFamilies': 9,

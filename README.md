@@ -60,7 +60,7 @@ Python environment and run:
 python scripts/extract_results.py /path/to/RoboValue.pdf --check
 ```
 
-The extractor specifically targets this 13-page manuscript layout and fails if
+The extractor targets Tables 1 and 2 on pages 7 and 8 and fails if
 the expected rows or cells change. For a new manuscript, update the extractor
 and inspect the tables before replacing the JSON. Update the source hash as
 well as the scores. Website users do not need Python.
@@ -76,4 +76,5 @@ during review. Review anonymity still needs a check of the published repository
 and page after deployment.
 
 The manuscript's references to appendix material are preserved. The current
-download is the supplied 13-page manuscript, without the separate appendices.
+download is the supplied 14-page manuscript, including the start of Appendix A;
+the remaining appendices are not included in this file.

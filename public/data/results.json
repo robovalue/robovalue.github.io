@@ -1,7 +1,8 @@
 {
   "source": "RoboValue manuscript, Tables 1 and 2",
   "sourceFile": "RoboValue.pdf",
-  "sourceSha256": "30799e416c965558c86e845779931921367ec1679f76d3787749c7abb36903b3",
+  "sourcePageCount": 14,
+  "sourceSha256": "34426abcf445f4703b5657963eecdb85d200d888275d07aefc8bdf7fd28cb5ab",
   "scale": 100,
   "modelFamilies": 9,
   "modelVariants": 15,

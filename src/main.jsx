@@ -62,8 +62,8 @@ function Hero() {
     <div className="hero-main">
       <div className="hero-copy">
         <div className="review-label"><span /> A BENCHMARK FOR ROBOTIC VALUE MODELS</div>
-        <h1>Judging the<br /><span>robot judges.</span></h1>
-        <p className="hero-subtitle">A Fine-Grained Sim-and-Real Benchmark for Heterogeneous Robotic Value Models</p>
+        <h1>Robo<span>Value</span></h1>
+        <p className="hero-subtitle">A Fine-Grained Sim-and-Real Benchmark for Unified Evaluation of Robotic Value Models</p>
         <p className="hero-description">Can a value model understand execution—or does it just recognize the appearance of progress?</p>
         <div className="hero-buttons">
           <a className="button primary" href="#leaderboard">Explore leaderboard <Icon /></a>
@@ -181,7 +181,7 @@ function Protocol() {
   </section>;
 }
 
-const CITATION = `@misc{robovalue2026,\n  title = {RoboValue: Judging the Robot Judges---A Fine-Grained\n           Sim-and-Real Benchmark for Heterogeneous Robotic Value Models},\n  author = {Anonymous},\n  year = {2026},\n  note = {Manuscript under review}\n}`;
+const CITATION = `@misc{robovalue2026,\n  title = {RoboValue: A Fine-Grained Sim-and-Real Benchmark\n           for Unified Evaluation of Robotic Value Models},\n  author = {Anonymous},\n  year = {2026},\n  note = {Manuscript under review}\n}`;
 
 function Resources() {
   const [copied, setCopied] = useState(false);
