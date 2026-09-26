@@ -36,7 +36,7 @@ function Icon({ name = 'arrow', size = 18, ...props }) {
 }
 
 function Logo() {
-  return <a className="brand" href="#home" aria-label="RoboValue home"><img src="/favicon.svg" alt="" width="32" height="32" /><span>Robo<span className="brand-accent">Value</span></span></a>;
+  return <a className="brand" href="#home" aria-label="RoboValue home"><img src="/assets/robovalue-logo.png" alt="RoboValue" width="2172" height="724" /></a>;
 }
 
 function Figure({ src, alt, caption, className = '' }) {
@@ -62,9 +62,9 @@ function Hero() {
     <div className="hero-main">
       <div className="hero-copy">
         <div className="review-label"><span /> A BENCHMARK FOR ROBOTIC VALUE MODELS</div>
-        <h1>Robo<span>Value</span></h1>
+        <h1><img className="hero-logo" src="/assets/robovalue-logo.png" alt="RoboValue" width="2172" height="724" /></h1>
         <p className="hero-subtitle">A Fine-Grained Sim-and-Real Benchmark for Unified Evaluation of Robotic Value Models</p>
-        <p className="hero-description">Can a value model understand execution—or does it just recognize the appearance of progress?</p>
+        <p className="hero-description">Shared evaluation interfaces and diagnostic trajectories test whether value models understand task execution beyond outcome scores and progress correlation.</p>
         <div className="hero-buttons">
           <a className="button primary" href="#leaderboard">Explore leaderboard <Icon /></a>
           <a className="button secondary" href="/RoboValue.pdf" target="_blank" rel="noopener noreferrer"><Icon name="paper" /> Read the paper</a>
@@ -93,9 +93,8 @@ function Hero() {
 
 function Overview() {
   return <section id="overview" className="section wrap">
-    <SectionTitle eyebrow="01 / THE BENCHMARK" title={<>One protocol.<br />Four complementary capabilities.</>}>RoboValue compares heterogeneous value models through shared interfaces, while preserving their native value semantics. Diagnostic trajectories expose what outcome scores alone can miss.</SectionTitle>
+    <SectionTitle eyebrow="01 / THE BENCHMARK" title={<>What makes execution<br />feedback reliable?</>}>We evaluate instruction grounding, progress and execution history, failure and recovery, and value consistency—while preserving each model’s native value semantics.</SectionTitle>
     <div className="capabilities">{GROUPS.map((g, i) => <a href={`#metric-${g.metrics[0]}`} className="capability" key={g.id} style={{ '--group-color': g.color }}><span className="capability-number">0{i + 1}</span><h3>{g.title}</h3><p>{g.description}</p><span className="capability-metrics">{g.metrics.map(m => METRICS[m].label).join(' · ')} <Icon size={15} /></span></a>)}</div>
-    <Figure src="/assets/overview.png" alt="RoboValue evaluation framework with shared interfaces and four capability dimensions" caption="Shared scalar, pairwise, and textual interfaces connect diverse value models to a unified diagnostic protocol. SIA is an additional metric described in the paper’s appendix." />
   </section>;
 }
 
@@ -176,6 +175,7 @@ function Dataset() {
 function Protocol() {
   return <section id="protocol" className="section wrap"><SectionTitle eyebrow="05 / HOW TO READ THE SCORES" title="A shared evaluation protocol.">Each metric asks a specific question. Model-specific adapters preserve native value semantics while exposing shared scalar, pairwise, and textual interfaces.</SectionTitle>
     <div className="setting-explainer"><div><span>ZERO-SHOT</span><p>Released checkpoints, without task-specific adaptation or reference demonstrations.</p></div><div><span>ONE-SHOT</span><p>One demonstration per task, excluded from evaluation, used for conditioning or task-specific adaptation.</p></div><div><span>GENERALIZATION</span><p>Change the embodiment or environment without further adaptation to the shifted condition.</p></div></div>
+    <Figure className="protocol-figure" src="/assets/overview.png" alt="RoboValue evaluation framework with shared interfaces and four capability dimensions" caption="Shared scalar, pairwise, and textual interfaces connect diverse value models to a unified diagnostic protocol." />
     <div className="metric-guide">{GROUPS.map(g => <div className="metric-family" key={g.id} style={{ '--group-color': g.color }}><h3>{g.title}</h3>{g.metrics.map(k => <details id={`metric-${k}`} key={k}><summary><span className="metric-symbol">{METRICS[k].label} {METRICS[k].lower ? '↓' : '↑'}</span><span>{METRICS[k].name}</span><span className="plus">+</span></summary><p>{METRICS[k].description}</p></details>)}</div>)}</div>
     <p className="protocol-note">Definitions and scoring details appear in Section 3.4 of the paper. Subtask Identification Accuracy (SIA) is an additional appendix metric and is not included in the main leaderboard.</p>
   </section>;
