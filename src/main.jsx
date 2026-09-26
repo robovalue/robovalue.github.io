@@ -148,7 +148,7 @@ function Leaderboard() {
 }
 
 const EXAMPLES = [
-  { id: 'cycle', label: 'Progress & regression', metric: 'CYCLE-VOC', title: 'The video moves forward. Then the task moves backward.', description: 'An expert trajectory is followed by its reversed sequence. A reliable value model should respond to task regression, even though presentation time keeps increasing.', files: ['pen-1', 'pen-2', 'pen-3', 'pen-2', 'pen-1'], labels: ['Forward', 'Forward', 'Turning point', 'Reverse', 'Reverse'], task: 'Fill pen holder · Simulation', question: 'Does the value track execution direction?' },
+  { id: 'cycle', label: 'Progress & regression', metric: 'CYCLE-VOC', title: 'Tracking progress and regression.', description: 'An expert trajectory is followed by its reversed sequence. A reliable value model should respond to task regression, even though presentation time keeps increasing.', files: ['pen-1', 'pen-2', 'pen-3', 'pen-2', 'pen-1'], labels: ['Forward', 'Forward', 'Turning point', 'Reverse', 'Reverse'], task: 'Fill pen holder · Simulation', question: 'Does the value track execution direction?' },
   { id: 'memory', label: 'Execution history', metric: 'MEMORY-VOC', title: 'Similar observations. Different task histories.', description: 'Repeated actions bring the robot back to visually similar states. The current image alone may not reveal how much of the requested sequence has been completed.', files: ['button-1', 'button-2', 'button-3', 'button-4', 'button-5'], labels: ['2.24 s', '3.00 s', '3.72 s', '4.48 s', '5.08 s'], task: 'Press by number · Simulation', question: 'Does the model remember the completed actions?' },
   { id: 'recovery', label: 'Failure & recovery', metric: 'FPL · TRR', title: 'An attempted recovery is not a successful recovery.', description: 'A failed recovery can be followed by continued activity. Values should reflect the unresolved error, rather than treating further motion as evidence of success.', files: ['fold-1', 'fold-2', 'fold-3', 'fold-4', 'fold-5'], labels: ['Before failure', 'After failure', 'Recovery attempt', 'Recovery fails', 'Next subtask'], task: 'Fold clothes · Simulation', question: 'Does the value reflect the recovery outcome?' },
 ];
@@ -157,16 +157,15 @@ function Diagnostics() {
   const [selected, setSelected] = useState('cycle');
   const e = EXAMPLES.find(e => e.id === selected);
   return <section id="diagnostics" className="section wrap">
-    <SectionTitle eyebrow="03 / LOOK CLOSER" title={<>Designed to reveal<br />the shortcuts.</>}>Successful and failed rollouts are only the beginning. Controlled diagnostic trajectories separate execution understanding from elapsed time, motion, and visual similarity.</SectionTitle>
+    <SectionTitle eyebrow="03 / DIAGNOSTIC EXAMPLES" title="What do the trajectories test?">Three examples illustrate how RoboValue tests progress reversal, execution history, and recovery outcomes.</SectionTitle>
     <div className="example-tabs" role="group" aria-label="Diagnostic example">{EXAMPLES.map(e => <button key={e.id} aria-pressed={e.id === selected} onClick={() => setSelected(e.id)}>{e.label}</button>)}</div>
     <div className="example-panel"><div className="example-intro"><span className="mini-label">{e.metric}</span><h3>{e.title}</h3><p>{e.description}</p></div><div className="filmstrip">{e.files.map((file, i) => <figure key={`${selected}-${i}`}><img src={`/assets/${file}.png`} loading="lazy" alt={`${e.task}: ${e.labels[i]}`} /><figcaption><span>0{i + 1}</span>{e.labels[i]}</figcaption></figure>)}</div><div className="example-footer"><span>{e.task}</span><strong>{e.question}</strong></div></div>
-    <div className="solution-callout"><span className="mini-label">CSVC</span><div><h3>Different valid orders. The same semantic subtask.</h3><p>Multi-Solution trajectories test whether a model assigns consistent value gains to the same subtask when its position in the execution changes.</p></div><a className="round-link" href="#metric-csvc" aria-label="Read about Cross-Solution Value Consistency"><Icon /></a></div>
   </section>;
 }
 
 function Dataset() {
   return <section id="dataset" className="section dataset-section"><div className="wrap">
-    <SectionTitle eyebrow="04 / SIMULATION MEETS THE REAL WORLD" title="A broader view of execution.">2,792 evaluation trajectories across four embodiments, with synchronized camera views, robot states, actions, and temporal annotations.</SectionTitle>
+    <SectionTitle eyebrow="04 / DATASET" title="Simulation and real-world tasks.">2,792 evaluation trajectories across four embodiments, with synchronized camera views, robot states, actions, and temporal annotations.</SectionTitle>
     <div className="dataset-facts"><div><strong>1,231</strong><span>simulation trajectories</span></div><div><strong>1,561</strong><span>real-world trajectories</span></div><div><strong>3</strong><span>evaluation conditions</span></div><div><strong>6</strong><span>trajectory types</span></div></div>
     <Figure src="/assets/dataset.png" alt="All 15 simulation and 20 real-world tasks, with failure, recovery, temporal, multi-solution, and distribution-shift examples" caption="35 manipulation tasks span standard conditions, embodiment shifts, and environment shifts. The benchmark includes expert demonstrations, error continuation, effective and ineffective recovery, long-horizon temporal trajectories, and multiple valid solutions." />
   </div></section>;
@@ -188,7 +187,7 @@ function Resources() {
   const [copyError, setCopyError] = useState(false);
   const copy = async () => { try { await navigator.clipboard.writeText(CITATION); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { setCopyError(true); } };
   return <section id="resources" className="section resources-section"><div className="wrap">
-    <SectionTitle eyebrow="06 / RESOURCES" title="Explore. Evaluate. Build on it.">The paper and reported results are available for anonymous review. Evaluation code, dataset access, and submission instructions will be added when available.</SectionTitle>
+    <SectionTitle eyebrow="06 / RESOURCES" title="Paper and benchmark resources.">The paper and reported results are available for anonymous review. Evaluation code, dataset access, and submission instructions will be added when available.</SectionTitle>
     <div className="resource-grid"><a href="/RoboValue.pdf" target="_blank" rel="noopener noreferrer"><Icon name="paper" size={24} /><h3>Read the paper</h3><p>Protocol, experiments, and analysis.</p><Icon /></a><a href="/data/results.json" download><Icon name="down" size={24} /><h3>Get the results</h3><p>All reported conditions in JSON.</p><Icon /></a><div className="resource-pending"><span className="mini-label">COMING SOON</span><h3>Code & dataset</h3><p>Evaluation tools and benchmark data.</p></div></div>
     <div className="citation"><div className="citation-heading"><h3>Citation <span>Anonymous review version</span></h3><button className="text-button" onClick={copy}><Icon name="copy" size={16} />{copied ? 'Copied' : 'Copy BibTeX'}</button></div><pre tabIndex={0}>{CITATION}</pre><span className="sr-only" role="status">{copied ? 'Citation copied.' : copyError ? 'Copy unavailable. Select and copy the citation text.' : ''}</span>{copyError && <p>Please select the citation text to copy it.</p>}</div>
   </div></section>;
