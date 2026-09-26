@@ -17,7 +17,7 @@ const METRICS = {
   memory_voc: { label: 'Memory-VOC', name: 'Memory-VOC', description: 'Evaluates progress tracking when visually similar observations recur with different task-relevant histories.' },
   fpl: { label: 'FPL', name: 'Failure-Point Localization', lower: true, description: 'Measures normalized temporal error between the annotated failure onset and the onset predicted from value declines. Lower is better.' },
   trr: { label: 'TRR', name: 'Trajectory Recovery Reasoning', description: 'Tests appropriate value trends through failure, continued error, recovery attempts, and recovery outcomes.' },
-  vs: { label: 'VS', name: 'Value Stability', description: 'Combines the efficiency ratio of value changes with non-flat time coverage along expert trajectories.' },
+  vs: { label: 'VS', name: 'Value Stability', description: 'Assesses consistent value trends along expert trajectories while discounting apparent stability from prolonged flat predictions. Combines the efficiency ratio with non-flat time coverage.' },
   csvc: { label: 'CSVC', name: 'Cross-Solution Value Consistency', description: 'Compares the gains assigned to the same semantic subtask across different valid execution orders.' },
 };
 const CONDITIONS = { id: 'Standard (ID)', emb: 'Cross-Embodiment', env: 'Cross-Environment' };
@@ -72,14 +72,14 @@ function Hero() {
         <p className="review-note">Anonymous project page · Review version</p>
       </div>
       <div className="hero-visual">
-        <div className="visual-heading"><span>EXECUTION, UNDER THE MICROSCOPE</span><span className="live-dot" /></div>
+        <div className="visual-heading"><span>ROBOVALUE · SIMULATION & REAL WORLD</span><span className="live-dot" /></div>
         <div className="visual-grid">
           <figure><img src="/assets/pen-2.png" alt="Dual-arm simulation: placing pens in a pen holder" /><figcaption><span>01</span> Task progress</figcaption></figure>
           <figure><img src="/assets/button-3.png" alt="Simulation: repeated button pressing with similar observations" /><figcaption><span>02</span> Execution history</figcaption></figure>
           <figure><img src="/assets/fold-4.png" alt="Simulation: a failed recovery during clothes folding" /><figcaption><span>03</span> Failure & recovery</figcaption></figure>
           <figure><img src="/assets/real-skewers.jpeg" alt="Real-world dual-arm manipulation: seasoning meat skewers" /><figcaption><span>04</span> Real-world manipulation</figcaption></figure>
         </div>
-        <div className="visual-footer"><span>Beyond outcomes. Into execution.</span><span>SIM + REAL <Icon size={15} /></span></div>
+        <div className="visual-footer"><span>Tasks, histories, and recovery outcomes</span><span>SIM + REAL <Icon size={15} /></span></div>
       </div>
     </div>
     <div className="stats-strip">
@@ -93,7 +93,7 @@ function Hero() {
 
 function Overview() {
   return <section id="overview" className="section wrap">
-    <SectionTitle eyebrow="01 / THE BENCHMARK" title={<>What makes execution<br />feedback reliable?</>}>We evaluate instruction grounding, progress and execution history, failure and recovery, and value consistency—while preserving each model’s native value semantics.</SectionTitle>
+    <SectionTitle eyebrow="01 / OVERVIEW" title="Four dimensions of execution understanding.">Outcome scores and progress correlation alone do not establish reliable execution understanding. RoboValue compares heterogeneous value models through shared evaluation interfaces across four complementary dimensions.</SectionTitle>
     <div className="capabilities">{GROUPS.map((g, i) => <a href={`#metric-${g.metrics[0]}`} className="capability" key={g.id} style={{ '--group-color': g.color }}><span className="capability-number">0{i + 1}</span><h3>{g.title}</h3><p>{g.description}</p><span className="capability-metrics">{g.metrics.map(m => METRICS[m].label).join(' · ')} <Icon size={15} /></span></a>)}</div>
   </section>;
 }
@@ -127,7 +127,7 @@ function Leaderboard() {
   const changeCondition = value => { setCondition(value); setSort(null); };
   return <section id="leaderboard" className="leaderboard-section section">
     <div className="wrap wide">
-      <SectionTitle eyebrow="02 / MODEL COMPARISON" title="The leaderboard.">Explore the strengths—and the gaps—of current robotic value models. Compare each capability under standard conditions and distribution shifts.</SectionTitle>
+      <SectionTitle eyebrow="02 / LEADERBOARD" title="Compare model performance.">Results from the paper under zero-shot and one-shot settings, covering in-domain evaluation and shifts in robot embodiment or environment.</SectionTitle>
       <div className="board">
         <div className="board-top"><div className="condition-tabs" role="group" aria-label="Evaluation condition">{Object.entries(CONDITIONS).map(([key, text]) => <button key={key} aria-pressed={condition === key} onClick={() => changeCondition(key)}>{text}</button>)}</div><span className="paper-version">PAPER RESULTS</span></div>
         <div className="board-controls"><div className="setting-switch" role="group" aria-label="Evaluation setting">{[['zero', 'Zero-shot'], ['one', 'One-shot']].map(([key, label]) => <button key={key} onClick={() => setSetting(key)} aria-pressed={setting === key}>{label}</button>)}</div><label className="search"><Icon name="search" /><input type="search" placeholder="Find a model…" aria-label="Find a model" value={query} onChange={e => setQuery(e.target.value)} /></label><button className="text-button download" disabled={!data || rows.length === 0} onClick={() => downloadCSV(rows, condition, columns)}><Icon name="down" size={16} /> Export CSV</button></div>
@@ -149,15 +149,15 @@ function Leaderboard() {
 
 const EXAMPLES = [
   { id: 'cycle', label: 'Progress & regression', metric: 'CYCLE-VOC', title: 'Tracking progress and regression.', description: 'An expert trajectory is followed by its reversed sequence. A reliable value model should respond to task regression, even though presentation time keeps increasing.', files: ['pen-1', 'pen-2', 'pen-3', 'pen-2', 'pen-1'], labels: ['Forward', 'Forward', 'Turning point', 'Reverse', 'Reverse'], task: 'Fill pen holder · Simulation', question: 'Does the value track execution direction?' },
-  { id: 'memory', label: 'Execution history', metric: 'MEMORY-VOC', title: 'Similar observations. Different task histories.', description: 'Repeated actions bring the robot back to visually similar states. The current image alone may not reveal how much of the requested sequence has been completed.', files: ['button-1', 'button-2', 'button-3', 'button-4', 'button-5'], labels: ['2.24 s', '3.00 s', '3.72 s', '4.48 s', '5.08 s'], task: 'Press by number · Simulation', question: 'Does the model remember the completed actions?' },
-  { id: 'recovery', label: 'Failure & recovery', metric: 'FPL · TRR', title: 'An attempted recovery is not a successful recovery.', description: 'A failed recovery can be followed by continued activity. Values should reflect the unresolved error, rather than treating further motion as evidence of success.', files: ['fold-1', 'fold-2', 'fold-3', 'fold-4', 'fold-5'], labels: ['Before failure', 'After failure', 'Recovery attempt', 'Recovery fails', 'Next subtask'], task: 'Fold clothes · Simulation', question: 'Does the value reflect the recovery outcome?' },
+  { id: 'memory', label: 'Execution history', metric: 'MEMORY-VOC', title: 'Tracking progress through repeated actions.', description: 'Repeated actions bring the robot back to visually similar states. The current image alone may not reveal how much of the requested sequence has been completed.', files: ['button-1', 'button-2', 'button-3', 'button-4', 'button-5'], labels: ['2.24 s', '3.00 s', '3.72 s', '4.48 s', '5.08 s'], task: 'Press by number · Simulation', question: 'Does the model remember the completed actions?' },
+  { id: 'recovery', label: 'Failure & recovery', metric: 'TRR', title: 'Distinguishing recovery attempts from outcomes.', description: 'This example shows an execution error, an unsuccessful recovery attempt, and a transition to the next subtask. TRR tests whether value changes reflect the failure, attempt, and outcome.', files: ['fold-1', 'fold-2', 'fold-3', 'fold-4', 'fold-5'], labels: ['Before failure', 'After failure', 'Recovery attempt', 'Recovery fails', 'Next subtask'], task: 'Fold clothes · Simulation', question: 'Does the value reflect the recovery outcome?' },
 ];
 
 function Diagnostics() {
   const [selected, setSelected] = useState('cycle');
   const e = EXAMPLES.find(e => e.id === selected);
   return <section id="diagnostics" className="section wrap">
-    <SectionTitle eyebrow="03 / DIAGNOSTIC EXAMPLES" title="What do the trajectories test?">Three examples illustrate how RoboValue tests progress reversal, execution history, and recovery outcomes.</SectionTitle>
+    <SectionTitle eyebrow="TRAJECTORY EXAMPLES" title="A closer look at execution.">Three examples illustrate how RoboValue tests progress reversal, execution history, and recovery outcomes.</SectionTitle>
     <div className="example-tabs" role="group" aria-label="Diagnostic example">{EXAMPLES.map(e => <button key={e.id} aria-pressed={e.id === selected} onClick={() => setSelected(e.id)}>{e.label}</button>)}</div>
     <div className="example-panel"><div className="example-intro"><span className="mini-label">{e.metric}</span><h3>{e.title}</h3><p>{e.description}</p></div><div className="filmstrip">{e.files.map((file, i) => <figure key={`${selected}-${i}`}><img src={`/assets/${file}.png`} loading="lazy" alt={`${e.task}: ${e.labels[i]}`} /><figcaption><span>0{i + 1}</span>{e.labels[i]}</figcaption></figure>)}</div><div className="example-footer"><span>{e.task}</span><strong>{e.question}</strong></div></div>
   </section>;
@@ -165,14 +165,14 @@ function Diagnostics() {
 
 function Dataset() {
   return <section id="dataset" className="section dataset-section"><div className="wrap">
-    <SectionTitle eyebrow="04 / DATASET" title="Simulation and real-world tasks.">2,792 evaluation trajectories across four embodiments, with synchronized camera views, robot states, actions, and temporal annotations.</SectionTitle>
+    <SectionTitle eyebrow="03 / DATASET" title="Simulation and real-world tasks.">2,792 evaluation trajectories across four embodiments, with synchronized camera views, robot states, actions, and temporal annotations.</SectionTitle>
     <div className="dataset-facts"><div><strong>1,231</strong><span>simulation trajectories</span></div><div><strong>1,561</strong><span>real-world trajectories</span></div><div><strong>3</strong><span>evaluation conditions</span></div><div><strong>6</strong><span>trajectory types</span></div></div>
     <Figure src="/assets/dataset.png" alt="All 15 simulation and 20 real-world tasks, with failure, recovery, temporal, multi-solution, and distribution-shift examples" caption="35 manipulation tasks span standard conditions, embodiment shifts, and environment shifts. The benchmark includes expert demonstrations, error continuation, effective and ineffective recovery, long-horizon temporal trajectories, and multiple valid solutions." />
   </div></section>;
 }
 
 function Protocol() {
-  return <section id="protocol" className="section wrap"><SectionTitle eyebrow="05 / HOW TO READ THE SCORES" title="A shared evaluation protocol.">Each metric asks a specific question. Model-specific adapters preserve native value semantics while exposing shared scalar, pairwise, and textual interfaces.</SectionTitle>
+  return <section id="protocol" className="section wrap"><SectionTitle eyebrow="04 / EVALUATION" title="Protocol and metrics.">Model-specific adapters provide shared scalar, pairwise, and textual interfaces while preserving each model’s native value semantics.</SectionTitle>
     <div className="setting-explainer"><div><span>ZERO-SHOT</span><p>Released checkpoints, without task-specific adaptation or reference demonstrations.</p></div><div><span>ONE-SHOT</span><p>One demonstration per task, excluded from evaluation, used for conditioning or task-specific adaptation.</p></div><div><span>GENERALIZATION</span><p>Change the embodiment or environment without further adaptation to the shifted condition.</p></div></div>
     <Figure className="protocol-figure" src="/assets/overview.png" alt="RoboValue evaluation framework with shared interfaces and four capability dimensions" caption="Shared scalar, pairwise, and textual interfaces connect diverse value models to a unified diagnostic protocol." />
     <div className="metric-guide">{GROUPS.map(g => <div className="metric-family" key={g.id} style={{ '--group-color': g.color }}><h3>{g.title}</h3>{g.metrics.map(k => <details id={`metric-${k}`} key={k}><summary><span className="metric-symbol">{METRICS[k].label} {METRICS[k].lower ? '↓' : '↑'}</span><span>{METRICS[k].name}</span><span className="plus">+</span></summary><p>{METRICS[k].description}</p></details>)}</div>)}</div>
@@ -187,14 +187,14 @@ function Resources() {
   const [copyError, setCopyError] = useState(false);
   const copy = async () => { try { await navigator.clipboard.writeText(CITATION); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { setCopyError(true); } };
   return <section id="resources" className="section resources-section"><div className="wrap">
-    <SectionTitle eyebrow="06 / RESOURCES" title="Paper and benchmark resources.">The paper and reported results are available for anonymous review. Evaluation code, dataset access, and submission instructions will be added when available.</SectionTitle>
+    <SectionTitle eyebrow="05 / RESOURCES" title="Paper and benchmark resources.">Access the paper and reported results below. Code and dataset links will be added when released.</SectionTitle>
     <div className="resource-grid"><a href="/RoboValue.pdf" target="_blank" rel="noopener noreferrer"><Icon name="paper" size={24} /><h3>Read the paper</h3><p>Protocol, experiments, and analysis.</p><Icon /></a><a href="/data/results.json" download><Icon name="down" size={24} /><h3>Get the results</h3><p>All reported conditions in JSON.</p><Icon /></a><div className="resource-pending"><span className="mini-label">COMING SOON</span><h3>Code & dataset</h3><p>Evaluation tools and benchmark data.</p></div></div>
     <div className="citation"><div className="citation-heading"><h3>Citation <span>Anonymous review version</span></h3><button className="text-button" onClick={copy}><Icon name="copy" size={16} />{copied ? 'Copied' : 'Copy BibTeX'}</button></div><pre tabIndex={0}>{CITATION}</pre><span className="sr-only" role="status">{copied ? 'Citation copied.' : copyError ? 'Copy unavailable. Select and copy the citation text.' : ''}</span>{copyError && <p>Please select the citation text to copy it.</p>}</div>
   </div></section>;
 }
 
 function App() {
-  return <><a href="#leaderboard" className="skip-link">Skip to leaderboard</a><header className="site-header"><div className="nav-inner"><Logo /><nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#leaderboard">Leaderboard</a><a href="#diagnostics">Examples</a><a href="#dataset">Dataset</a><a href="#protocol">Metrics</a></nav><a href="/RoboValue.pdf" className="nav-paper" target="_blank" rel="noopener noreferrer">Paper <Icon name="paper" size={16} /></a></div></header><main><Hero /><Overview /><Leaderboard /><Diagnostics /><Dataset /><Protocol /><Resources /></main><footer><div className="wrap"><Logo /><p>A unified benchmark for more reliable robotic value models.</p><a href="#home">Back to top ↑</a></div></footer></>;
+  return <><a href="#leaderboard" className="skip-link">Skip to leaderboard</a><header className="site-header"><div className="nav-inner"><Logo /><nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#leaderboard">Leaderboard</a><a href="#dataset">Dataset</a><a href="#protocol">Evaluation</a><a href="#resources">Resources</a></nav><a href="/RoboValue.pdf" className="nav-paper" target="_blank" rel="noopener noreferrer">Paper <Icon name="paper" size={16} /></a></div></header><main><Hero /><Overview /><Leaderboard /><Dataset /><Diagnostics /><Protocol /><Resources /></main><footer><div className="wrap"><Logo /><p>A unified benchmark for more reliable robotic value models.</p><a href="#home">Back to top ↑</a></div></footer></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
