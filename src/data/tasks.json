@@ -55,7 +55,29 @@
         "appendix": "C.2",
         "page": 29
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The first, largest number is grasped incorrectly.",
+            "continuation": "Place the wrong number on the first pad, then place the remaining three numbers in descending order.",
+            "effectiveRecovery": "Return the wrongly grasped number and pick/place the correct largest number.",
+            "ineffectiveRecovery": "Return the wrongly grasped number, then pick/place a different incorrect number."
+          },
+          {
+            "failure": "The second-largest number is grasped incorrectly.",
+            "continuation": "Place the wrong number on the second pad, then place the remaining two numbers in descending order.",
+            "effectiveRecovery": "Return the wrongly grasped number and pick/place the correct second-largest number.",
+            "ineffectiveRecovery": "Return the wrongly grasped number, then pick/place a different incorrect number."
+          },
+          {
+            "failure": "The third-largest number is grasped incorrectly.",
+            "continuation": "Place the wrong number on the third pad, then place the final number on the fourth pad.",
+            "effectiveRecovery": "Return the wrongly grasped number and pick/place the correct third-largest number.",
+            "ineffectiveRecovery": "Return the wrongly grasped number, then pick/place a different incorrect number."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/fill-pen-holder",
@@ -120,7 +142,44 @@
         "appendix": "C.2",
         "page": 29
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The pen holder is dropped while being grasped.",
+            "continuation": "Continue with a fake placement of one pen at the holder and end.",
+            "effectiveRecovery": "Pick up the holder again and complete the task.",
+            "ineffectiveRecovery": "Try to pick up the holder again but fail, then fake-place one pen and end."
+          },
+          {
+            "failure": "The second pen is dropped during grasp/transfer.",
+            "continuation": "Continue with a fake insertion at the holder and end.",
+            "effectiveRecovery": "Pick up the pen again and insert it successfully.",
+            "ineffectiveRecovery": "Try to pick up the pen again but fail, then fake-insert and end."
+          },
+          {
+            "failure": "The second pen is misaligned with the holder opening.",
+            "continuation": "Continue the insertion motion outside the holder and end.",
+            "effectiveRecovery": "Lift and realign the pen with the opening, then complete the task.",
+            "ineffectiveRecovery": "Lift the pen but move it farther from the opening, then continue the failed insertion and end."
+          },
+          {
+            "failure": "The fourth pen is dropped during grasp/transfer.",
+            "continuation": "Continue with a fake insertion at the holder and end.",
+            "effectiveRecovery": "Pick up the pen again and insert it successfully.",
+            "ineffectiveRecovery": "Try to pick up the pen again but fail, then fake-insert and end."
+          },
+          {
+            "failure": "The fourth pen is misaligned with the holder opening.",
+            "continuation": "Continue the insertion motion outside the holder and end.",
+            "effectiveRecovery": "Lift and realign the pen with the opening, then complete the task.",
+            "ineffectiveRecovery": "Lift the pen but move it farther from the opening, then continue the failed insertion and end."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "The four pens may be inserted in any order after the holder is picked up; return the filled holder only after all four insertions. The task has 20 represented pen orders."
+      }
     },
     {
       "id": "simulation/fold-clothes",
@@ -173,7 +232,29 @@
         "appendix": "C.2",
         "page": 30
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The left sleeve is dropped because it is not grasped securely.",
+            "continuation": "Continue with a fake folding motion.",
+            "effectiveRecovery": "Regrasp the left sleeve and complete the task.",
+            "ineffectiveRecovery": "Try to regrasp the left sleeve but fail, then continue with a fake fold."
+          },
+          {
+            "failure": "The right sleeve is dropped because it is not grasped securely.",
+            "continuation": "Continue with a fake folding motion.",
+            "effectiveRecovery": "Regrasp the right sleeve and complete the task.",
+            "ineffectiveRecovery": "Try to regrasp the right sleeve but fail, then continue with a fake fold."
+          },
+          {
+            "failure": "The garment is dropped before it is folded in half.",
+            "continuation": "Continue with a fake folding motion.",
+            "effectiveRecovery": "Regrasp the garment and complete the fold.",
+            "ineffectiveRecovery": "Try to regrasp the garment but fail, then continue with a fake fold."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/hang-mugs",
@@ -226,7 +307,32 @@
         "appendix": "C.2",
         "page": 30
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The first mug handle is not aligned with the rack and the mug is released.",
+            "continuation": "Release the misaligned mug so it falls, then end.",
+            "effectiveRecovery": "Pick the mug up again, align its handle, and hang it.",
+            "ineffectiveRecovery": "Try to pick the mug up again but fail, then continue with a fake placement and end."
+          },
+          {
+            "failure": "The second mug handle is not aligned with the rack and the mug is released.",
+            "continuation": "Release the misaligned mug so it falls, then end.",
+            "effectiveRecovery": "Pick the mug up again, align its handle, and hang it.",
+            "ineffectiveRecovery": "Try to pick the mug up again but fail, then continue with a fake placement and end."
+          },
+          {
+            "failure": "The third mug handle is not aligned with the rack and the mug is released.",
+            "continuation": "Release the misaligned mug so it falls, then end.",
+            "effectiveRecovery": "Pick the mug up again, align its handle, and hang it.",
+            "ineffectiveRecovery": "Try to pick the mug up again but fail, then continue with a fake placement and end."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "The three mugs may be hung in different orders, with different assignments of mugs to the left and right arms. The page presents 20 valid variations."
+      }
     },
     {
       "id": "simulation/insert-tubes",
@@ -279,7 +385,35 @@
         "appendix": "C.2",
         "page": 31
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The second tube is dropped during grasp/transfer.",
+            "continuation": "Continue with a fake placement at the tube-rack slot and end.",
+            "effectiveRecovery": "Pick the tube up again and complete the insertion sequence.",
+            "ineffectiveRecovery": "Try to pick the tube up again but fail, then fake-place and end."
+          },
+          {
+            "failure": "The third tube is dropped during grasp/transfer.",
+            "continuation": "Continue with a fake placement at the tube-rack slot and end.",
+            "effectiveRecovery": "Pick the tube up again and complete the insertion sequence.",
+            "ineffectiveRecovery": "Try to pick the tube up again but fail, then fake-place and end."
+          },
+          {
+            "failure": "The second tube misses its rack slot because it is misaligned.",
+            "continuation": "Ignore the failed insertion and continue with the remaining actions.",
+            "effectiveRecovery": "Lift and realign the tube, then insert it successfully.",
+            "ineffectiveRecovery": "Lift and attempt to realign the tube but leave it outside the slot, then continue."
+          },
+          {
+            "failure": "The third tube misses its rack slot because it is misaligned.",
+            "continuation": "Ignore the failed insertion and continue with the remaining actions.",
+            "effectiveRecovery": "Lift and realign the tube, then insert it successfully.",
+            "ineffectiveRecovery": "Lift and attempt to realign the tube but leave it outside the slot, then continue."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/make-toast",
@@ -332,7 +466,29 @@
         "appendix": "C.2",
         "page": 31
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The first bread slice is dropped before entering the toaster.",
+            "continuation": "Continue with a placement motion as though the slice were in the slot.",
+            "effectiveRecovery": "Pick up the slice and insert it before continuing.",
+            "ineffectiveRecovery": "Try to pick up the slice but fail, then perform the nominal placement motion."
+          },
+          {
+            "failure": "The second slice is misaligned at the toaster slot.",
+            "continuation": "Move on to the next subtask without correcting the slice.",
+            "effectiveRecovery": "Realign and insert the slice, then continue.",
+            "ineffectiveRecovery": "Attempt realignment but leave it misaligned, then proceed."
+          },
+          {
+            "failure": "The control is pressed off target.",
+            "continuation": "Continue the downward motion without contacting the control.",
+            "effectiveRecovery": "Reposition over the control and press it.",
+            "ineffectiveRecovery": "Reposition incorrectly and miss the control again."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/organize-table",
@@ -389,7 +545,35 @@
         "appendix": "C.2",
         "page": 32
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The alarm clock is dropped because it is not grasped securely.",
+            "continuation": "Continue with a fake placement on the cabinet.",
+            "effectiveRecovery": "Pick the alarm clock up again and complete the task.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then continue with a fake placement and end."
+          },
+          {
+            "failure": "The figure is dropped because it is not grasped securely.",
+            "continuation": "Continue with a fake placement in front of the screen.",
+            "effectiveRecovery": "Pick the figure up again and complete the task.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then continue with a fake placement."
+          },
+          {
+            "failure": "The mouse is dropped because it is not grasped securely.",
+            "continuation": "Continue with a fake placement on the black mat.",
+            "effectiveRecovery": "Pick the mouse up again and complete the task.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then continue with a fake placement and end."
+          },
+          {
+            "failure": "The keyboard is pushed clearly in the wrong direction.",
+            "continuation": "Continue the incorrect push and end in failure.",
+            "effectiveRecovery": "Push it again in the correct direction and complete the placement.",
+            "ineffectiveRecovery": "Attempt to correct the push direction, but leave the keyboard misplaced."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/press-by-number",
@@ -494,7 +678,29 @@
         "appendix": "C.2",
         "page": 33
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "A bottle is dropped during the initial grasp.",
+            "continuation": "Continue with a nominal transfer/dump motion although the bottle was not secured.",
+            "effectiveRecovery": "Pick up the bottle, stabilize it, and place it in the bin.",
+            "ineffectiveRecovery": "Retry the grasp unsuccessfully, then continue/end without a valid deposit."
+          },
+          {
+            "failure": "The bottle is dropped during the handoff between grippers.",
+            "continuation": "Continue the receiving-arm motion as if the handoff succeeded.",
+            "effectiveRecovery": "Adjust the receiving pose/grip, complete the handoff, and deposit the bottle.",
+            "ineffectiveRecovery": "Attempt an incorrect handoff adjustment, drop the bottle again, then continue with a nominal dump."
+          },
+          {
+            "failure": "The bottle is dropped while being carried toward the bin.",
+            "continuation": "Continue or return with the failed carry without making a valid deposit.",
+            "effectiveRecovery": "Regrasp the bottle and place it in the bin.",
+            "ineffectiveRecovery": "Retry the grasp but drop it again, then end the attempt."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/pack-objects-into-box",
@@ -555,7 +761,44 @@
         "appendix": "C.2",
         "page": 33
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The box is dropped because it is not grasped securely.",
+            "continuation": "Continue with a fake placement of the box in front; fake-place the later objects there as well.",
+            "effectiveRecovery": "Pick the box up again and complete the task.",
+            "ineffectiveRecovery": "Try to pick the box up again but fail, then continue fake-placing the later objects in front."
+          },
+          {
+            "failure": "The shoe is dropped during grasp/transfer.",
+            "continuation": "Do not recover it; continue to the next item.",
+            "effectiveRecovery": "Pick up the shoe and place it in the box.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then continue with a fake placement and end."
+          },
+          {
+            "failure": "The hammer is dropped during grasp/transfer.",
+            "continuation": "Do not recover it; continue to the next item.",
+            "effectiveRecovery": "Pick up the hammer and place it in the box.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then continue with a fake placement and end."
+          },
+          {
+            "failure": "The toothbrush is dropped during grasp/transfer.",
+            "continuation": "Do not recover it; continue to the next item.",
+            "effectiveRecovery": "Pick up the toothbrush and place it in the box.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then continue with a fake placement and end."
+          },
+          {
+            "failure": "The toy car is dropped during grasp/transfer.",
+            "continuation": "Do not recover it; continue to the next item/end.",
+            "effectiveRecovery": "Pick up the toy car and place it in the box.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then continue with a fake placement and end."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "After the box is positioned, the four objects may be packed in different orders, with different assignments of objects to the two arms. The page presents 20 valid variations."
+      }
     },
     {
       "id": "simulation/play-stacking-toy",
@@ -612,7 +855,35 @@
         "appendix": "C.2",
         "page": 34
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "A piece is dropped while placing a group of pieces.",
+            "continuation": "Continue the sequence with a nominal placement on the corresponding peg.",
+            "effectiveRecovery": "Pick up the piece and place it on its assigned peg.",
+            "ineffectiveRecovery": "Retry the grasp unsuccessfully, then perform the nominal placement motion."
+          },
+          {
+            "failure": "A piece is assigned to the wrong peg.",
+            "continuation": "Leave it on the wrong peg and continue with the remaining pieces.",
+            "effectiveRecovery": "Move it from the wrong peg to its assigned peg.",
+            "ineffectiveRecovery": "Attempt to move it but leave it on the wrong peg."
+          },
+          {
+            "failure": "A peg and hole are misaligned, so the piece misses or tilts beside the base.",
+            "continuation": "Continue to the next step without seating the piece.",
+            "effectiveRecovery": "Realign the piece and insert it into the hole.",
+            "ineffectiveRecovery": "Retry alignment but leave the piece tilted or unseated."
+          },
+          {
+            "failure": "A single piece is not fully seated after pressing.",
+            "continuation": "Continue the pressing motion without achieving insertion.",
+            "effectiveRecovery": "Pick up/re-align the piece and press it fully into place.",
+            "ineffectiveRecovery": "Retry with an incorrect alignment, leaving it unseated."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/stack-blocks",
@@ -665,7 +936,32 @@
         "appendix": "C.2",
         "page": 34
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The first block is dropped.",
+            "continuation": "Continue with a nominal placement motion although the block is not placed.",
+            "effectiveRecovery": "Pick up the block and complete the stack.",
+            "ineffectiveRecovery": "Retry the grasp unsuccessfully, then continue the nominal placement motion."
+          },
+          {
+            "failure": "The second block overlaps the first by less than 40%.",
+            "continuation": "Leave the unstable placement; placing the next block causes the stack to collapse.",
+            "effectiveRecovery": "Reposition the second block to a stable overlap, then continue.",
+            "ineffectiveRecovery": "Make a small push/side adjustment that leaves overlap below 40%, then continue into collapse."
+          },
+          {
+            "failure": "The third block overlaps by less than 20%.",
+            "continuation": "Continue, allowing the top block to collapse.",
+            "effectiveRecovery": "Reposition it to a stable overlap.",
+            "ineffectiveRecovery": "Attempt an adjustment but leave the overlap insufficient, so the top block collapses."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "The three blocks may be selected in different orders and assigned to different arms, while placement must respect support: each lower block must be in place before the block above it. The page presents 20 valid variations."
+      }
     },
     {
       "id": "simulation/store-laptop-and-headphones",
@@ -718,7 +1014,29 @@
         "appendix": "C.2",
         "page": 35
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The headphones are misaligned and fall during hanging.",
+            "continuation": "Continue to the laptop subtask without rehanging them.",
+            "effectiveRecovery": "Regrasp, adjust the angle, and hang the headphones securely.",
+            "ineffectiveRecovery": "Retry hanging with an incorrect pose so they fall again."
+          },
+          {
+            "failure": "The laptop remains open because it is offset.",
+            "continuation": "Continue with a nominal insertion into the storage slot.",
+            "effectiveRecovery": "Adjust the laptop until it closes, then store it.",
+            "ineffectiveRecovery": "Attempt to close it but leave it open, then perform the nominal insertion."
+          },
+          {
+            "failure": "The laptop is misaligned during insertion.",
+            "continuation": "Continue/return from the slot without correcting the alignment.",
+            "effectiveRecovery": "Realign and insert the laptop.",
+            "ineffectiveRecovery": "Retry insertion but leave it misaligned."
+          }
+        ]
+      }
     },
     {
       "id": "simulation/swap-blocks",
@@ -827,7 +1145,29 @@
         "appendix": "C.2",
         "page": 36
       },
-      "sequencePage": 38
+      "sequencePage": 38,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The broom is dropped during the handoff.",
+            "continuation": "Continue with nominal sweeping motions without securing the broom.",
+            "effectiveRecovery": "Pick up the broom and stabilize the handoff, then sweep.",
+            "ineffectiveRecovery": "Retry the pickup/grip unsuccessfully and continue."
+          },
+          {
+            "failure": "The dustpan is placed with an incorrect orientation (about 90° off).",
+            "continuation": "Sweep with the dustpan misoriented; no blocks are collected.",
+            "effectiveRecovery": "Rotate it to the correct orientation and sweep.",
+            "ineffectiveRecovery": "Make only a small 15–30° correction, leaving it misoriented; no blocks are collected."
+          },
+          {
+            "failure": "The sweep misses part of the blocks.",
+            "continuation": "Sweep only part of the set and stop without checking/completing the remainder.",
+            "effectiveRecovery": "Sweep the remaining blocks into the dustpan.",
+            "ineffectiveRecovery": "Make another incomplete sweep, leaving blocks outside the dustpan."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/apply-dish-soap-repeatedly",
@@ -948,7 +1288,32 @@
         "appendix": "D.2",
         "page": 40
       },
-      "sequencePage": 51
+      "sequencePage": 51,
+      "multiSolutionTrajectories": {
+        "description": "The teapot must be placed before its lid, so these actions form a fixed two-step unit. That unit, placing cup A, placing the closed tea canister, and inserting the tea tongs can be arranged in 24 valid orders."
+      },
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The lid slips from the gripper while being carried from the left-side start area toward teapot B.",
+            "continuation": "Leave the lid and continue with the tea canister and tongs.",
+            "effectiveRecovery": "Pick up the lid again and place it correctly on teapot B, then continue.",
+            "ineffectiveRecovery": "Retry the transfer but drop the lid again, then continue."
+          },
+          {
+            "failure": "The tea tongs are placed horizontally in the bamboo holder instead of upright with the gripping end up.",
+            "continuation": "Leave the tongs horizontal and end.",
+            "effectiveRecovery": "Remove and rotate the tongs, then insert them upright with the gripping end up.",
+            "ineffectiveRecovery": "Attempt reinsertion but leave the tongs horizontal."
+          },
+          {
+            "failure": "Teapot B lands partly outside its coaster, so its base is not fully within the valid target area.",
+            "continuation": "Leave the teapot out of position and complete the lid, canister, and tongs steps.",
+            "effectiveRecovery": "Regrasp and place teapot B upright fully within its coaster, then continue.",
+            "ineffectiveRecovery": "Attempt to reposition it, but leave it partly outside the coaster, tilted, or with the wrong opening orientation."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/arrange-flowers-and-reed-diffuser",
@@ -1009,7 +1374,38 @@
         "appendix": "D.2",
         "page": 41
       },
-      "sequencePage": 51
+      "sequencePage": 51,
+      "multiSolutionTrajectories": {
+        "description": "The three flowers form one consecutive action block and may be inserted in any of 6 orders. That block, placing the diffuser bottle, and inserting the reed may be arranged in 6 orders, giving 36 valid sequences. Each sequence is represented once."
+      },
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The first grasp misses the sunflower stem; the empty gripper reaches the vase while the sunflower remains at its start position.",
+            "continuation": "Leave the sunflower and complete the remaining flowers, diffuser bottle, and reed.",
+            "effectiveRecovery": "Return to the sunflower, grasp the stem, insert it into the vase, and finish the task.",
+            "ineffectiveRecovery": "Retry but miss the sunflower again, then complete the remaining actions."
+          },
+          {
+            "failure": "The pink rose misses the vase opening and falls in the marked area in front of the vase.",
+            "continuation": "Leave the rose there and complete the lily, bottle, and reed actions.",
+            "effectiveRecovery": "Pick up the fallen rose, align its stem with the opening, and insert it before continuing.",
+            "ineffectiveRecovery": "Retry the insertion but drop the rose in the same marked area again, then continue."
+          },
+          {
+            "failure": "The diffuser bottle is placed upright entirely outside the coaster, with a visible gap.",
+            "continuation": "Leave the bottle outside the coaster, insert the reed, and end.",
+            "effectiveRecovery": "Move the bottle upright onto the coaster, then insert the reed.",
+            "ineffectiveRecovery": "Attempt to reposition it, but leave its base entirely outside the coaster; then insert the reed."
+          },
+          {
+            "failure": "The reed misses the bottle opening and falls in the marked area beside the bottle.",
+            "continuation": "Leave the reed beside the bottle and end.",
+            "effectiveRecovery": "Pick up the reed, align it with the bottle opening, and insert it.",
+            "ineffectiveRecovery": "Retry but miss the opening again, leaving the reed in the same marked area."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/arrange-seasoning-jars",
@@ -1062,7 +1458,38 @@
         "appendix": "D.2",
         "page": 41
       },
-      "sequencePage": 51
+      "sequencePage": 51,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "FRT-1: the gripper closes without grasping jar 1.",
+            "continuation": "Perform a fake transport, then place jars 2 and 3 normally.",
+            "effectiveRecovery": "Regrasp jar 1, place it upright in its target, then place jars 2 and 3.",
+            "ineffectiveRecovery": "Retry the grasp but still miss jar 1, perform a fake transport, then place jars 2 and 3."
+          },
+          {
+            "failure": "FRT-2: jar 2 is dropped during transport.",
+            "continuation": "Leave jar 2 and perform a fake transport, then place jar 3 normally.",
+            "effectiveRecovery": "Pick up jar 2 and place it upright in its target, then place jar 3.",
+            "ineffectiveRecovery": "Try to recover jar 2 but drop it again, then fake-transport and place jar 3."
+          },
+          {
+            "failure": "FRT-4: the gripper knocks over a previously placed jar while resetting.",
+            "continuation": "Leave the knocked-over jar and end.",
+            "effectiveRecovery": "Pick up the jar and restore it upright, then end.",
+            "ineffectiveRecovery": "Try to adjust the jar but leave it lying down, then end."
+          },
+          {
+            "failure": "FRT-5: jar 2 is released lying on the shelf.",
+            "continuation": "Leave jar 2 lying down, then place jar 3 and end.",
+            "effectiveRecovery": "Lift jar 2, set it upright, then place jar 3.",
+            "ineffectiveRecovery": "Try to correct jar 2 but release it lying down again, then place jar 3."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "The three jars may be handled in different orders. The dominant hand and the assignment of jars to the three rack positions may also vary, giving 24 represented solution configurations."
+      }
     },
     {
       "id": "real-world/enter-keypad-number-sequence",
@@ -1175,7 +1602,50 @@
         "appendix": "D.2",
         "page": 42
       },
-      "sequencePage": 51
+      "sequencePage": 51,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The pen holder is dropped during grasp.",
+            "continuation": "Continue by taking one pen from the table, fake-place it, and end.",
+            "effectiveRecovery": "Pick up the holder again and complete the task.",
+            "ineffectiveRecovery": "Return but fail to pick up the holder; fake-place one pen and end."
+          },
+          {
+            "failure": "The second pen is dropped during grasp/transfer.",
+            "continuation": "Continue with a fake insertion at the holder and end.",
+            "effectiveRecovery": "Pick the pen up again and complete the insertion.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then fake-insert and end."
+          },
+          {
+            "failure": "The second pen is misaligned with the holder.",
+            "continuation": "Continue an incorrect insertion motion outside the holder and end.",
+            "effectiveRecovery": "Lift and realign the pen with the holder, then complete the task.",
+            "ineffectiveRecovery": "Lift the pen but move it farther from the holder, then continue the incorrect insertion and end."
+          },
+          {
+            "failure": "The fourth pen is dropped during grasp/transfer.",
+            "continuation": "Continue with a fake insertion at the holder and end.",
+            "effectiveRecovery": "Pick the pen up again and complete the insertion.",
+            "ineffectiveRecovery": "Try to pick it up again but fail, then fake-insert and end."
+          },
+          {
+            "failure": "The fourth pen is misaligned with the holder.",
+            "continuation": "Continue an incorrect insertion motion outside the holder and end.",
+            "effectiveRecovery": "Lift and realign the pen with the holder, then complete the task.",
+            "ineffectiveRecovery": "Lift the pen but move it farther from the holder, then continue the incorrect insertion and end."
+          },
+          {
+            "failure": "The holder is placed at an excessive angle and falls over.",
+            "continuation": "Leave the fallen holder and end.",
+            "effectiveRecovery": "Lift the holder, correct its angle, and complete the placement.",
+            "ineffectiveRecovery": "Lift it but adjust the angle further in the wrong direction, then release it so it falls again."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "The four pens may be inserted in different orders; picking up the holder comes first, and returning it follows all four insertions. There are 20 represented pen orders, with two trajectories for each order."
+      }
     },
     {
       "id": "real-world/load-plastic-plates-into-rack",
@@ -1228,7 +1698,41 @@
         "appendix": "D.2",
         "page": 43
       },
-      "sequencePage": 51
+      "sequencePage": 51,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The gripper closes without grasping the blue plate.",
+            "continuation": "Leave the blue plate in place and proceed with the white and green plates.",
+            "effectiveRecovery": "Retry the grasp, load the blue plate, then complete the sequence.",
+            "ineffectiveRecovery": "Retry with another empty grasp, then proceed without loading it."
+          },
+          {
+            "failure": "The white plate is dropped during transport.",
+            "continuation": "Continue the nominal transfer and proceed to the green plate.",
+            "effectiveRecovery": "Pick up and load the white plate, then continue.",
+            "ineffectiveRecovery": "Retry but drop it again, then proceed."
+          },
+          {
+            "failure": "The white plate is loaded at the wrong angle and falls.",
+            "continuation": "Do not retry; proceed to the green plate.",
+            "effectiveRecovery": "Pick up, reorient, and load the white plate.",
+            "ineffectiveRecovery": "Retry with the same incorrect angle so it falls again."
+          },
+          {
+            "failure": "The green plate is directed to an occupied slot and falls.",
+            "continuation": "Continue to the end without loading it.",
+            "effectiveRecovery": "Place it in the vacant slot.",
+            "ineffectiveRecovery": "Retry at the occupied slot and drop it again."
+          },
+          {
+            "failure": "The gripper catches and pulls a loaded green plate out of the rack.",
+            "continuation": "Ignore the displaced plate and end the sequence.",
+            "effectiveRecovery": "Return the plate to its slot.",
+            "ineffectiveRecovery": "Attempt to return it but fail and drop/displace it again."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/operate-drawers-in-sequence",
@@ -1345,7 +1849,35 @@
         "appendix": "D.2",
         "page": 44
       },
-      "sequencePage": 51
+      "sequencePage": 51,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "Book A is placed in the wrong zone.",
+            "continuation": "Leave it there and continue by placing Book B.",
+            "effectiveRecovery": "Move Book A to its designated zone, then continue.",
+            "ineffectiveRecovery": "Attempt the adjustment but leave Book A in the wrong zone, then place Book B."
+          },
+          {
+            "failure": "The grasp of Book B fails.",
+            "continuation": "Continue to the next subtask without moving Book B.",
+            "effectiveRecovery": "Regrasp Book B and complete its placement.",
+            "ineffectiveRecovery": "Retry the grasp unsuccessfully, then continue."
+          },
+          {
+            "failure": "Book B is not centered/stable on Book A.",
+            "continuation": "Leave the unstable placement and end/continue as specified.",
+            "effectiveRecovery": "Adjust Book B to the intended stable position.",
+            "ineffectiveRecovery": "Attempt an adjustment but leave it off-center/unstable."
+          },
+          {
+            "failure": "The pen is placed outside the centerline of the book spine.",
+            "continuation": "Leave it outside the spine and continue/end the sequence.",
+            "effectiveRecovery": "Place the pen along the spine.",
+            "ineffectiveRecovery": "Attempt to adjust it but leave it outside the spine."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/organize-cosmetics-storage-box",
@@ -1414,7 +1946,32 @@
         "appendix": "D.2",
         "page": 44
       },
-      "sequencePage": 51
+      "sequencePage": 51,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The lipstick cap is misaligned and does not cap the lipstick.",
+            "continuation": "Put the empty cap in the drawer and continue.",
+            "effectiveRecovery": "Realign and secure the cap, then continue.",
+            "ineffectiveRecovery": "Attempt to adjust the cap but leave it uncapped/misaligned, then put the empty cap away."
+          },
+          {
+            "failure": "The eyebrow pencil slips or the grasp is empty.",
+            "continuation": "Proceed to the next item without placing it.",
+            "effectiveRecovery": "Regrasp and place the pencil.",
+            "ineffectiveRecovery": "Retry the grasp but let it slip again, then proceed."
+          },
+          {
+            "failure": "Cleansing oil is placed in the serum slot or collides with another item.",
+            "continuation": "Leave it in the wrong slot and continue.",
+            "effectiveRecovery": "Pull it back and place it in the designated slot.",
+            "ineffectiveRecovery": "Attempt a correction but leave it in the wrong slot."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "The lipstick, pink eyebrow pencil, serum, and makeup remover can be arranged in 24 valid orders. Open the drawer first; close it immediately after both the lipstick and eyebrow pencil are inside."
+      }
     },
     {
       "id": "real-world/organize-desktop-workstation",
@@ -1475,7 +2032,32 @@
         "appendix": "D.2",
         "page": 45
       },
-      "sequencePage": 52
+      "sequencePage": 52,
+      "multiSolutionTrajectories": {
+        "description": "The four actions are placing the pen (A), storing the eraser and closing the drawer (B), switching off the lamp (C), and unplugging it (D). A, B, and the C→D pair can be ordered in 12 valid ways. Either hand may be the primary hand, giving 24 action-order and hand combinations."
+      },
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The pen is released outside the pen holder and remains unplaced.",
+            "continuation": "Leave the pen and continue the remaining stages.",
+            "effectiveRecovery": "Adjust the grasp or alignment, place the pen correctly in the holder, and continue.",
+            "ineffectiveRecovery": "Attempt to correct the placement but leave the pen outside the holder, then continue."
+          },
+          {
+            "failure": "The lamp plug is not removed after the unplugging action.",
+            "continuation": "Leave the plug connected and end.",
+            "effectiveRecovery": "Reposition and retry until the plug is removed.",
+            "ineffectiveRecovery": "The SOP text also describes an adjusted retry that removes the plug, so it does not distinguish this branch from effective recovery."
+          },
+          {
+            "failure": "After placing the pen, the robot knocks over the pen holder while returning; the pen and holder are no longer arranged correctly.",
+            "continuation": "Do not rearrange the pen or holder; continue to the end.",
+            "effectiveRecovery": "Rearrange the pen and holder correctly, then finish the task.",
+            "ineffectiveRecovery": "Attempt to rearrange them, but fail to pick up the pen, the holder, or both; the arrangement remains incorrect."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/pack-items-for-shipping",
@@ -1528,7 +2110,29 @@
         "appendix": "D.2",
         "page": 45
       },
-      "sequencePage": 52
+      "sequencePage": 52,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The gripper closes beside the wireless mouse and lifts empty; the mouse remains at its marked start position.",
+            "continuation": "Leave the mouse and pack the wired earphones and foam sheet.",
+            "effectiveRecovery": "Regrasp the mouse successfully, place it in the box, then pack the earphones and foam sheet.",
+            "ineffectiveRecovery": "Retry the grasp but remain empty-handed; leave the mouse and pack the remaining items."
+          },
+          {
+            "failure": "The wired earphones slip from the gripper while being carried to the box and land on the table outside it.",
+            "continuation": "Leave the earphones outside the box and place the foam sheet.",
+            "effectiveRecovery": "Pick up the dropped earphones, place them in the box, then place the foam sheet.",
+            "ineffectiveRecovery": "Retry the pickup but drop the earphones again; leave them outside and place the foam sheet."
+          },
+          {
+            "failure": "The foam sheet partly covers the contents but hangs over the box rim.",
+            "continuation": "Leave the sheet overhanging and end the task.",
+            "effectiveRecovery": "Reposition the sheet flat inside the box, covering the packed items without crossing the rim.",
+            "ineffectiveRecovery": "Attempt to adjust the sheet, but leave part of it overhanging the rim."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/place-pot-on-induction-cooker",
@@ -1585,7 +2189,35 @@
         "appendix": "D.2",
         "page": 46
       },
-      "sequencePage": 52
+      "sequencePage": 52,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The pan is still held above the cooker but is off-center from the heating ring.",
+            "continuation": "Release it while still off-center, then try to take out the spatula and end.",
+            "effectiveRecovery": "Keep holding it, lift and center it on the heating ring, then continue and finish successfully.",
+            "ineffectiveRecovery": "Make only a small adjustment; it remains visibly off-center. Release it, then try to take out the spatula and end."
+          },
+          {
+            "failure": "The pan is centered on the heating ring, but its handle points in the wrong direction while still held.",
+            "continuation": "Release the pan without correcting its handle direction, then try to take out the spatula and end.",
+            "effectiveRecovery": "Keep holding and rotate the pan until its handle points in the task-specified direction, then finish the remaining steps.",
+            "ineffectiveRecovery": "Rotate it only slightly so the handle still points the wrong way, then release and end."
+          },
+          {
+            "failure": "The spatula slips from the gripper back into the pan, with its handle across the rim.",
+            "continuation": "Do not retrieve the spatula; place the lid on the pan, where the spatula prevents it from closing, then reset and end.",
+            "effectiveRecovery": "Pick up the spatula, put it in the basket, then close the lid fully and finish successfully.",
+            "ineffectiveRecovery": "Attempt to pick up the spatula but miss; leave it across the rim, then place the lid so it cannot close fully and end."
+          },
+          {
+            "failure": "The spatula is in the basket, but the lid is held off-center with only one side resting on the pan rim.",
+            "continuation": "Release the tilted lid; let it remain tilted or fall, then reset and end.",
+            "effectiveRecovery": "Lift and center the lid over the pan, lower it until it rests fully on the rim, then finish successfully.",
+            "ineffectiveRecovery": "Lift and move the lid slightly but leave it off-center, then release it tilted and end."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/prepare-breakfast",
@@ -1650,7 +2282,29 @@
         "appendix": "D.2",
         "page": 46
       },
-      "sequencePage": 52
+      "sequencePage": 52,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The first grasp misses the pig bun; the empty gripper reaches above the steamer while the bun remains at its start position.",
+            "continuation": "Leave the pig bun and complete the remaining food and steamer steps.",
+            "effectiveRecovery": "Return to the pig bun, grasp it, place it in the left side of the second-tier basket, and continue.",
+            "ineffectiveRecovery": "Retry but miss the bun again, then complete the remaining steps."
+          },
+          {
+            "failure": "The custard bun misses the second-tier basket and lands in the marked area on the table beside the steamer.",
+            "continuation": "Leave it outside and finish the remaining food, basket, and lid steps.",
+            "effectiveRecovery": "Pick up the bun from the marked area, place it in the right side of the second-tier basket, and continue.",
+            "ineffectiveRecovery": "Retry but miss the basket again, leaving the bun in the same marked area, then continue."
+          },
+          {
+            "failure": "The lid is left visibly tilted on the top basket, with a clear gap on one side.",
+            "continuation": "Leave the lid tilted, reset the arm, and end.",
+            "effectiveRecovery": "Regrasp the lid and seat it evenly on the top basket.",
+            "ineffectiveRecovery": "Attempt to adjust the lid, but leave it tilted with a visible gap."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/press-button-five-times",
@@ -1815,7 +2469,38 @@
         "appendix": "D.2",
         "page": 48
       },
-      "sequencePage": 52
+      "sequencePage": 52,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "FRT-1: the bowl is released on the plate instead of in front of it.",
+            "continuation": "Leave the bowl on the plate, then place the fork and knife as planned and end.",
+            "effectiveRecovery": "Move the bowl to the correct position in front of the plate, then place the fork and knife.",
+            "ineffectiveRecovery": "Try to reposition the bowl but release it on the plate again, then place the fork and knife."
+          },
+          {
+            "failure": "FRT-3: the fork is placed in the right-side target zone instead of the left.",
+            "continuation": "Leave it there, then place the knife on the left, producing a swapped arrangement.",
+            "effectiveRecovery": "Move the fork to the left target, then place the knife on the right.",
+            "ineffectiveRecovery": "Try to adjust the fork but leave it on the right, then place the knife on the left."
+          },
+          {
+            "failure": "FRT-4: the knife is placed in the right target zone with its handle and blade reversed.",
+            "continuation": "Leave its orientation unchanged and end.",
+            "effectiveRecovery": "Rotate the knife 180 degrees and return it to the right target.",
+            "ineffectiveRecovery": "Try to rotate/reposition it but leave it reversed, then end."
+          },
+          {
+            "failure": "FRT-5: the knife is released outside the tablecloth.",
+            "continuation": "Leave it outside the tablecloth and end.",
+            "effectiveRecovery": "Pick it up, orient it forward, and place it in the right target zone.",
+            "ineffectiveRecovery": "Try to reposition it but release it outside the tablecloth again, then end."
+          }
+        ]
+      },
+      "multiSolutionTrajectories": {
+        "description": "The plate, bowl, fork, and knife placements may be completed in any order, giving 24 valid sequences."
+      }
     },
     {
       "id": "real-world/sort-colored-blocks-into-boxes",
@@ -1868,7 +2553,29 @@
         "appendix": "D.2",
         "page": 48
       },
-      "sequencePage": 52
+      "sequencePage": 52,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "FRT-1: the red block is placed on the middle white slot before the yellow block is placed on the left slot.",
+            "continuation": "Leave the red/yellow positions swapped, then place the blue block in the right slot.",
+            "effectiveRecovery": "Move the red block to the left slot, then place the yellow and blue blocks in their correct slots.",
+            "ineffectiveRecovery": "Try to move the red block but put it back on the middle slot, then place the yellow and blue blocks."
+          },
+          {
+            "failure": "FRT-2: the yellow block is released straddling the boundary between the left and middle slots.",
+            "continuation": "Leave it straddling the boundary, then place the blue block in the right slot.",
+            "effectiveRecovery": "Move the yellow block fully onto the middle slot, then place the blue block.",
+            "ineffectiveRecovery": "Try to adjust the yellow block but leave it straddling the boundary, then place the blue block."
+          },
+          {
+            "failure": "FRT-3: the blue block is dropped onto the table during transport.",
+            "continuation": "Leave it on the table; perform the nominal empty placement at the right slot and end.",
+            "effectiveRecovery": "Pick up the blue block and place it on the right slot.",
+            "ineffectiveRecovery": "Try to pick up the blue block but drop it in the same recovery zone again, then perform the nominal empty placement and end."
+          }
+        ]
+      }
     },
     {
       "id": "real-world/strike-drum-five-times",
@@ -1981,7 +2688,35 @@
         "appendix": "D.2",
         "page": 49
       },
-      "sequencePage": 52
+      "sequencePage": 52,
+      "suboptimalTrajectories": {
+        "events": [
+          {
+            "failure": "The plate/bowl is not grasped.",
+            "continuation": "End or continue the nominal transfer without a secured plate.",
+            "effectiveRecovery": "Grasp the plate and continue the transfer.",
+            "ineffectiveRecovery": "Retry with another empty grasp, then end/continue without it."
+          },
+          {
+            "failure": "The first block is released outside the plate.",
+            "continuation": "Leave it outside and continue transferring the remaining blocks/tilting the plate.",
+            "effectiveRecovery": "Pick up the block, put it on the plate, and continue.",
+            "ineffectiveRecovery": "Attempt to pick/place it but leave it outside, then continue."
+          },
+          {
+            "failure": "The grasp of the second block is empty.",
+            "continuation": "Continue with a nominal placement motion and end the attempt.",
+            "effectiveRecovery": "Regrasp the block and continue the transfer.",
+            "ineffectiveRecovery": "Retry unsuccessfully, then perform the nominal placement motion."
+          },
+          {
+            "failure": "The plate with blocks is dropped during transport.",
+            "continuation": "Continue with a nominal dump motion although the plate was not carried successfully.",
+            "effectiveRecovery": "Regrasp the plate and complete the transfer/dump.",
+            "ineffectiveRecovery": "Retry the grasp unsuccessfully, then perform the nominal dump motion."
+          }
+        ]
+      }
     }
   ],
   "sourceVersion": "2026-10-24",

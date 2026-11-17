@@ -38,10 +38,18 @@
 .counterfactual-changes dd>span:first-child{color:var(--doc-muted)}
 .counterfactual-changes strong{color:var(--doc-accent);font-weight:600}
 .change-arrow{padding:0 5px}
+.suboptimal-events{list-style:none;padding:0;margin:20px 0 0}
+.suboptimal-events>li{padding:14px 0;border-top:1px solid var(--doc-border)}
+.suboptimal-events h3{display:flex;align-items:baseline;gap:12px;font-family:inherit;font-size:16px;font-weight:400;line-height:1.6;margin:0 0 8px;color:#454c58}
+.suboptimal-error-number{flex:0 0 auto;color:var(--doc-muted);font-family:inherit;font-size:inherit;font-weight:inherit;white-space:nowrap}
+.suboptimal-events dl{margin:0}
+.suboptimal-events dl>div{display:grid;grid-template-columns:190px minmax(0,1fr);gap:24px;padding:9px 0}
+.suboptimal-events dt{font-size:12px;font-weight:500;line-height:1.6;color:var(--doc-muted)}
+.suboptimal-events dd{margin:0;font-size:16px;line-height:1.6;color:#454c58}
 .task-source{font-size:14px;color:var(--doc-muted);margin-top:28px}
 .nav-group .task-nav{margin:8px 0 0;border:0}
 .docs-sidebar .task-nav summary{font-size:13px;font-weight:500;padding:7px 9px}
 .docs-sidebar .task-nav>div{border-left:1px solid var(--doc-border);margin-left:8px;padding-left:5px}
 .docs-sidebar .task-nav a{font-size:12px;line-height:1.45;padding:6px 8px}
-@media(max-width:1190px){.task-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.trajectory-types>div,.condition-descriptions>div,.task-specification>div,.counterfactual-changes>div{grid-template-columns:155px minmax(0,1fr);gap:18px}}
-@media(max-width:600px){.task-catalog{grid-template-columns:1fr;gap:20px}.task-condition-images,.task-videos{grid-template-columns:1fr;gap:22px}.task-condition-images figcaption{font-size:12px}.trajectory-types>div,.condition-descriptions>div,.task-specification>div,.counterfactual-changes>div{grid-template-columns:1fr;gap:7px}.task-section{margin-top:32px}.task-instruction{padding:15px 17px}.doc-main .task-card h2{font-size:17px}.task-card p{font-size:13px}}
+@media(max-width:1190px){.task-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.trajectory-types>div,.condition-descriptions>div,.task-specification>div,.counterfactual-changes>div,.suboptimal-events dl>div{grid-template-columns:155px minmax(0,1fr);gap:18px}}
+@media(max-width:600px){.task-catalog{grid-template-columns:1fr;gap:20px}.task-condition-images,.task-videos{grid-template-columns:1fr;gap:22px}.task-condition-images figcaption{font-size:12px}.trajectory-types>div,.condition-descriptions>div,.task-specification>div,.counterfactual-changes>div,.suboptimal-events dl>div{grid-template-columns:1fr;gap:7px}.task-section{margin-top:32px}.task-instruction{padding:15px 17px}.doc-main .task-card h2{font-size:17px}.task-card p{font-size:13px}}
