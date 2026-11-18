@@ -5,7 +5,8 @@ import { RankingModel } from './ranking-model';
 import { HeroBackground } from './hero-background';
 import { LoadingImage } from './loading-image';
 import { GROUPS, CAPABILITY_TABLE_HEADERS } from './benchmark-metrics';
-import { TRACKS, scoreHighlights } from './leaderboard-utils';
+import { scoreHighlights, sortedRows, unifiedRanking } from './leaderboard-utils';
+import { SettingBadge, SettingsSummary } from './evaluation-setting';
 import { useResults } from './use-results';
 import { useHomeReveal } from './use-home-reveal';
 import taskData from './data/tasks.json';
@@ -73,7 +74,7 @@ function Introduction() {
         <p className="rv-reveal">We introduce <strong className="rv-brand-name rv-brand-primary">RoboValue</strong>, a fine-grained sim-and-real benchmark for unified evaluation of robotic value models.</p>
         <p className="rv-reveal"><strong className="rv-brand-name">RoboValue-Dataset</strong> provides expert training demonstrations and annotated test trajectories across <strong className="rv-data-emphasis">15 simulation and 20 real-world manipulation tasks</strong>. Contrasts in task instructions, execution history, recovery outcomes, and valid subtask orders expose unreliable value judgments. Separate embodiment and environment shifts test generalization.</p>
         <p className="rv-reveal"><strong className="rv-brand-name">RoboValue-Benchmark</strong> evaluates four complementary capabilities: {GROUPS.map((group, index) => <React.Fragment key={group.id}>{index > 0 && (index === GROUPS.length - 1 ? ', and ' : ', ')}<strong className="rv-capability-name" style={{ '--capability-color': `var(--rv-capability-${group.id}, ${group.color})` }}>{group.title.toLowerCase()}</strong></React.Fragment>)}. Shared interfaces and model-specific adapters enable comparison across heterogeneous models while preserving their native value semantics.</p>
-        <p className="rv-reveal">We establish <strong className="rv-brand-name">RoboValue-Leaderboard</strong> with separate overall rankings and capability profiles for Zero-Shot and One-Shot. This release does not report Full-Shot evaluation results. Our analyses distinguish instruction insensitivity from incorrect semantic grounding and reveal weaknesses in history awareness, recovery reasoning, and subtask credit. These findings inform future value supervision for policy learning, action planning, and execution monitoring.</p>
+        <p className="rv-reveal">We establish <strong className="rv-brand-name">RoboValue-Leaderboard</strong> with capability profiles for Zero-Shot and One-Shot and a unified overall ranking across settings. This release does not report Full-Shot evaluation results. Our analyses distinguish instruction insensitivity from incorrect semantic grounding and reveal weaknesses in history awareness, recovery reasoning, and subtask credit. These findings inform future value supervision for policy learning, action planning, and execution monitoring.</p>
       </div>
     </div>
   </section>;
@@ -96,7 +97,7 @@ function TaskGallery({ domain }) {
   const changeCondition = direction => setCondition(current => CONDITION_ORDER[(CONDITION_ORDER.indexOf(current) + direction + CONDITION_ORDER.length) % CONDITION_ORDER.length]);
   return <section className={`rv-task-suite rv-${simulation ? 'simulation' : 'real'}-suite`} id={simulation ? 'tasks' : 'real-world'} aria-labelledby={`${domain}-title`}>
     <div className="rv-container">
-      <div className="rv-centered-heading rv-reveal">{simulation && <p className="rv-eyebrow"><Icon name="database" size={16} />DATASET</p>}<h2 id={`${domain}-title`}>RoboValue {simulation ? 'Simulation' : 'Real-World'} Tasks</h2></div>
+      <div className="rv-centered-heading rv-reveal">{simulation && <p className="rv-eyebrow"><Icon name="database" size={16} /><span className="rv-eyebrow-text">DATASET</span></p>}<h2 id={`${domain}-title`}>RoboValue {simulation ? 'Simulation' : 'Real-World'} Tasks</h2></div>
       <div className="rv-condition-controls rv-reveal">
         <button className="rv-condition-arrow" type="button" aria-label={`Previous ${name.toLowerCase()} condition`} aria-controls={galleryId} onClick={() => changeCondition(-1)}><Icon className="rv-previous" name="chevron" size={20} /></button>
         <div className="rv-condition-switch" role="group" aria-label={`${name} viewing condition`}>{Object.entries(CONDITIONS).map(([id, label]) => <button type="button" key={id} aria-pressed={condition === id} aria-controls={galleryId} onClick={() => setCondition(id)}>{label}</button>)}</div>
@@ -113,17 +114,15 @@ function TaskGallery({ domain }) {
 
 function HomeResults() {
   const { data, error, retry } = useResults();
-  const [track, setTrack] = useState('zero');
-  const rows = (data?.rows || []).filter(row => row.setting === track).sort((a, b) => a.aggregate.rank - b.aggregate.rank);
+  const rows = sortedRows(unifiedRanking(data?.rows || []), { query: '', sort: null });
   const columns = ['overall', ...GROUPS.map(group => group.id)];
   const highlights = scoreHighlights(rows, 'aggregate', columns);
   const colors = { understanding: '#366c9a', tracking: '#447d64', diagnosis: '#a56f2d', consistency: '#a45368' };
   const renderScore = (value, key) => <span className={value === highlights[key]?.best ? 'rv-score-best' : value === highlights[key]?.second ? 'rv-score-second' : ''}>{score(value)}</span>;
   return <section className="rv-section rv-results" id="results" aria-labelledby="home-results-title"><div className="rv-container">
-    <div className="rv-results-heading rv-reveal"><div className="rv-centered-heading"><p className="rv-eyebrow"><Icon name="trophy" size={16} />LEADERBOARD</p><h2 id="home-results-title">RoboValue Leaderboard</h2></div></div>
+    <div className="rv-results-heading rv-reveal"><div className="rv-centered-heading"><p className="rv-eyebrow"><Icon name="trophy" size={16} /><span className="rv-eyebrow-text">LEADERBOARD</span></p><h2 id="home-results-title">RoboValue Leaderboard</h2><SettingsSummary /></div></div>
     <div className="rv-preview rv-reveal">
-      <div className="rv-preview-top"><div className="rv-small-switch" role="group" aria-label="Homepage evaluation track">{Object.entries(TRACKS).map(([id, label]) => <button type="button" key={id} aria-pressed={track === id} aria-controls="home-results-table" onClick={() => setTrack(id)}>{label}</button>)}</div></div>
-      <div className="rv-preview-frame"><div className="rv-preview-scroll" role="region" aria-label={`Homepage overall ranking, ${TRACKS[track]}`} tabIndex={0}><table className="rv-preview-table" id="home-results-table"><caption className="sr-only">All models in the {TRACKS[track]} track, ranked by Overall. Normalized capability scores range from 0 to 100; higher is better.</caption><thead><tr><th scope="col">Rank</th><th scope="col">Model</th><th scope="col" className="rv-preview-overall">Overall</th>{GROUPS.map(group => <th scope="col" key={group.id} className="rv-preview-capability" style={{ '--capability-color': colors[group.id] }} title={group.title}>{CAPABILITY_TABLE_HEADERS[group.id]}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row.id}><td className="rv-rank">{row.aggregate.rank}</td><th scope="row"><RankingModel row={row} /></th><td className="rv-preview-overall">{renderScore(row.aggregate.overall, 'overall')}</td>{GROUPS.map(group => <td key={group.id}>{renderScore(row.aggregate[group.id], group.id)}</td>)}</tr>)}</tbody></table></div>{!rows.length && <div className="rv-preview-empty" role="status">{track === 'full' ? 'Full-Shot evaluation results are not reported in this release.' : error ? <><strong>Results could not be loaded.</strong><button type="button" className="rv-text-link" onClick={retry}>Try Again<Icon size={15} /></button></> : data ? 'No results yet.' : 'Loading results…'}</div>}</div>
+      <div className="rv-preview-frame"><div className="rv-preview-scroll" role="region" aria-label="Homepage overall ranking, all settings" tabIndex={0}><table className="rv-preview-table" id="home-results-table"><caption className="sr-only">All settings ranked together by Overall. Published capability scores; higher is better. Negative scores are retained.</caption><thead><tr><th scope="col">Rank</th><th scope="col">Model</th><th scope="col" className="rv-preview-setting">Setting</th><th scope="col" className="rv-preview-overall">Overall</th>{GROUPS.map(group => <th scope="col" key={group.id} className="rv-preview-capability" style={{ '--capability-color': colors[group.id] }} title={group.title}>{CAPABILITY_TABLE_HEADERS[group.id]}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row.id}><td className="rv-rank">{row.aggregate.rank}</td><th scope="row"><RankingModel row={row} /></th><td className="rv-preview-setting"><SettingBadge setting={row.setting} /></td><td className="rv-preview-overall">{renderScore(row.aggregate.overall, 'overall')}</td>{GROUPS.map(group => <td key={group.id}>{renderScore(row.aggregate[group.id], group.id)}</td>)}</tr>)}</tbody></table></div>{!rows.length && <div className="rv-preview-empty" role="status">{error ? <><strong>Results could not be loaded.</strong><button type="button" className="rv-text-link" onClick={retry}>Try Again<Icon size={15} /></button></> : data ? 'No results yet.' : 'Loading results…'}</div>}</div>
       {!!rows.length && <div className="rv-preview-legend"><b>Best</b> · <span className="rv-score-second">Second Best</span></div>}
     </div>
     <nav className="rv-results-doc-links rv-reveal" aria-label="Detailed evaluation results"><a className="rv-text-link" href="/leaderboard/">View Detailed Results<Icon size={20} /></a></nav>
@@ -133,7 +132,7 @@ function HomeResults() {
 function EvaluationFramework() {
   return <section className="rv-section rv-framework" id="framework" aria-labelledby="framework-title"><div className="rv-container">
     <div className="rv-centered-heading rv-reveal">
-      <p className="rv-eyebrow"><Icon name="leaderboard" size={16} />BENCHMARK</p>
+      <p className="rv-eyebrow"><Icon name="leaderboard" size={16} /><span className="rv-eyebrow-text">BENCHMARK</span></p>
       <h2 id="framework-title">Four Capability Dimensions</h2>
       <p className="rv-framework-intro">RoboValue tests whether models ground value judgments in task requirements, track progress and regression using execution history, localize failures and distinguish recovery outcomes, and provide stable feedback with consistent subtask credit.</p>
     </div>
@@ -152,7 +151,7 @@ function EvaluationFramework() {
 function Evaluation() {
   return <section className="rv-resources rv-evaluation" id="evaluation" aria-labelledby="evaluation-title">
     <div className="rv-container rv-narrow rv-reveal">
-      <p className="rv-eyebrow"><Icon name="leaderboard" size={16} />EVALUATION</p>
+      <p className="rv-eyebrow"><Icon name="leaderboard" size={16} /><span className="rv-eyebrow-text">EVALUATION</span></p>
       <h2 id="evaluation-title">Submit Your Model</h2>
       <p className="rv-evaluation-description">View the evaluation requirements and application form. Applications are paused during anonymous review.</p>
       <div className="rv-resource-links"><a className="rv-evaluation-action" href="/eval/">View Evaluation<Icon size={18} /></a></div>

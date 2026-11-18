@@ -19,9 +19,9 @@ npm run build
 - Leaderboard: `/leaderboard/`
 - Evaluation: `/eval/`
 
-Documentation covers the dataset, evaluation workflow, model adapter interface, metrics, 15 simulation tasks, 20 real-world tasks, and diagnostic trajectories. The leaderboard provides Zero-Shot and One-Shot rankings, capability scores, detailed metrics, filtering, sorting and CSV export.
+Documentation covers the dataset, evaluation workflow, model adapter interface, metrics, 15 simulation tasks, 20 real-world tasks, and diagnostic trajectories. Home and Leaderboard share one Overall ranking across evaluation settings, with Setting badges, capability scores, per-condition raw metrics, sorting and CSV export. The current result snapshot contains 24 configurations (17 Zero-Shot and 7 One-Shot), plus SIA-only results in the detailed table. No Full-Shot results are reported.
 
-Scores and research assets are retained from the current research snapshot. Missing values remain missing. Hardware names and the names, sources and logos of evaluated models identify the benchmark setup and related work, rather than project authors.
+Results follow the November 19, 2026 research snapshot. Overall uses 30% Understanding, 20% Monitoring, 30% Reasoning and 20% Consistency; fixed-reference calibration retains negative contributions. Published capability scores are preserved without reconstructing unreported raw VROC values. Task specifications and research assets retain their previously reviewed snapshot. Missing values remain missing. Hardware names and the names, sources and logos of evaluated models identify the benchmark setup and related work, rather than project authors.
 
 ## Anonymous Review
 
